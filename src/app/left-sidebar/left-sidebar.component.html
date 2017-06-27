@@ -1,0 +1,16 @@
+<div class="col-sm-3 col-md-2 sidebar">
+    <ul class="nav nav-sidebar">
+        <li [ngClass]="{'active': currentLink == '/'}">
+            <a (click)="onMenuClick($event)" href="/">Összefoglalás</a>
+        </li>
+        <li [ngClass]="{'active': currentLink == '/user-manager'}">
+            <a (click)="onMenuClick($event)" href="/user-manager">Lakó kezelés</a>
+        </li>
+        <li [ngClass]="{'active': currentLink == '/analytics'}">
+            <a (click)="onMenuClick($event)" href="/analytics">Analytics</a>
+        </li>
+        <li [ngClass]="{'active': currentLink == '/export'}">
+            <a (click)="onMenuClick($event)" href="/export">Export</a>
+        </li>
+    </ul>
+</div>
