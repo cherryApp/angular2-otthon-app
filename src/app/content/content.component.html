@@ -36,16 +36,33 @@
                         <th>Email</th>
                         <th>Telefon</th>
                         <th>Hozzátartozó</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let user of getActiveUsers()">
+                    <tr *ngFor="let user of users">
                         <td>{{ user.id }}</td>
                         <td>{{ user.lastName }}</td>
                         <td>{{ user.firstName }}</td>
                         <td>{{ user.email }}</td>
                         <td>{{ user.phone }}</td>
                         <td>{{ user.relatives }}</td>
+                        <td>
+                            <div class="btn-group">
+                              <button (click)="onChangeActive(user)"
+                                  class="btn btn-xs"
+                                  [ngClass]="{'btn-info': user.active, 'btn-warning': !user.active}">
+                                      <span *ngIf="user.active">active</span>
+                                      <span *ngIf="!user.active">inactive</span>
+                              </button>
+                              <button (click)="onEditUser(user)" class="btn btn-primary btn-xs">
+                                  <span class="glyphicon glyphicon-edit"></span>
+                              </button>
+                              <button (click)="deleteUser(user)" class="btn btn-danger btn-xs">
+                                  <span class="glyphicon glyphicon-remove"></span>
+                              </button>
+                            </div>
+                        </td>
                     </tr>
                 </tbody>
             </table>

@@ -1,4 +1,5 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { UrlService } from '../url.service';
 
 @Component({
   selector: 'app-left-sidebar',
@@ -9,7 +10,7 @@ export class LeftSidebarComponent implements OnInit {
   private currentLink: string = "/";
   @Output('change') pageChange: EventEmitter<string> = new EventEmitter();
 
-  constructor() { }
+  constructor(private urlService: UrlService) { }
 
   ngOnInit() {
   }
@@ -19,7 +20,8 @@ export class LeftSidebarComponent implements OnInit {
     let element = $event.target as HTMLLinkElement;
     this.currentLink = element.href.replace(location.origin, "");
 
-    this.pageChange.emit(this.currentLink);
+    this.urlService.jumpTo(this.currentLink);
+    // this.pageChange.emit(this.currentLink);
 
     console.log(this.currentLink);
   }

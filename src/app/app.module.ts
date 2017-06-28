@@ -7,6 +7,9 @@ import { TopHeaderComponent } from './top-header/top-header.component';
 import { LeftSidebarComponent } from './left-sidebar/left-sidebar.component';
 import { ContentComponent } from './content/content.component';
 import { UserManagerComponent } from './content/user-manager/user-manager.component';
+import { UserService } from './user.service';
+import { UserEditorComponent } from './content/user-manager/user-editor/user-editor.component';
+import { UrlService } from './url.service';
 
 @NgModule({
   declarations: [
@@ -14,13 +17,17 @@ import { UserManagerComponent } from './content/user-manager/user-manager.compon
     TopHeaderComponent,
     LeftSidebarComponent,
     ContentComponent,
-    UserManagerComponent
+    UserManagerComponent,
+    UserEditorComponent
   ],
   imports: [
     BrowserModule,
     FormsModule
   ],
-  providers: [],
+  providers: [
+    UserService,
+    UrlService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
