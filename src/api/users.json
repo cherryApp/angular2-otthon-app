@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "lastName": "Nagy",
+    "firstName": "Ádám",
+    "email": "na@gmail.com",
+    "phone": "651651651",
+    "relatives": "Józsi",
+    "active": true
+  },
+  {
+    "id": 2,
+    "lastName": "Kiss",
+    "firstName": "Balázs",
+    "email": "na@gmail.com",
+    "phone": "651651651",
+    "relatives": "Józsi",
+    "active": true
+  },
+  {
+    "id": 3,
+    "lastName": "Piros",
+    "firstName": "Magdolna",
+    "email": "na@gmail.com",
+    "phone": "651651651",
+    "relatives": "Józsi",
+    "active": false
+  }
+]

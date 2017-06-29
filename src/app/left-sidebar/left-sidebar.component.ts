@@ -13,6 +13,12 @@ export class LeftSidebarComponent implements OnInit {
   constructor(private urlService: UrlService) { }
 
   ngOnInit() {
+      this.urlService.urlChanged
+        .subscribe(
+            (ev) => {
+                this.currentLink = ev.url;
+            }
+        )
   }
 
   onMenuClick($event: Event) {

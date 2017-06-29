@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, EventEmitter, Output } from '@angular/core';
 
 import { User } from '../model/User';
 import { UserService } from '../user.service';
@@ -11,6 +11,10 @@ import { UrlService } from '../url.service';
 })
 export class ContentComponent implements OnInit, OnDestroy {
   @Input('pageChange') pageChange: EventEmitter<any>;
+  @Output() usersCount: Number = 0;
+  @Output() roomsCount: Number = 12;
+  @Output() staffCount: Number = 30;
+  @Output() currentStaffCount: Number = 7;
   private currentLink: string = "/";
 
   users = [];
@@ -28,9 +32,7 @@ export class ContentComponent implements OnInit, OnDestroy {
 
     this.currentLink = this.urlService.currentUrl;
 
-    this.users = this.userService.getAll();
-
-    console.log( this.userService.getOne(1) );
+    this.usersCount = this.userService.getAll().length;
   }
 
   getActiveUsers() {
@@ -41,19 +43,6 @@ export class ContentComponent implements OnInit, OnDestroy {
       }
     }
     return actives;
-  }
-
-  onChangeActive(user: User) {
-      this.userService.changeStatus(user);
-  }
-
-  onEditUser(user: User) {
-      this.userService.lastEditedUser = user;
-      this.urlService.jumpTo('/user-manager');
-  }
-
-  deleteUser(user: User) {
-      this.userService.deleteUser(user);
   }
 
   ngOnDestroy() {
