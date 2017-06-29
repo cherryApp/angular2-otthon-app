@@ -16,7 +16,17 @@ export class UserTableRowComponent implements OnInit {
     private urlService: UrlService) { }
 
   ngOnInit() {
-      this.users = this.userService.getAll();
+      this.userService.getAll()
+          .then(
+              (users) => {
+                  console.log(users);
+                  this.users = users;
+              },
+              (err) => {
+                  this.users = [];
+              }
+          );
+      console.log(this.users);
   }
 
   onChangeActive(user: User) {

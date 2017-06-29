@@ -1,23 +1,53 @@
 import { Injectable, Output } from '@angular/core';
+import { Http, Response } from '@angular/http';
+
 import { User } from './model/User';
+import { ConfigService } from './config.service';
 
 @Injectable()
 export class UserService {
 
   users: Array<User> = [];
   lastEditedUser: User = null;
+  usersGetted: boolean = false;
 
-  constructor() {
-      let user1 = new User(1, 'Nagy', 'Ádám', 'na@gmail.com', '621651651', 'Józsi');
-      let user2 = new User(2, 'Kiss', 'Bertold', 'kb@gmail.com', '621651651', 'Pisti', true);
-      let user3 = new User(3, 'Piros', 'Rozália', 'pr@gmail.com', '621651651');
-      this.users.push(user1);
-      this.users.push(user2);
-      this.users.push(user3);
+  constructor(private config: ConfigService, private http: Http) {
+      // this.getUsersFromHttp();
   }
 
-  getAll() {
-      return this.users;
+  getUsersFromHttp() {
+      return new Promise( (resolve, reject) => {
+          if (this.usersGetted) {
+              return resolve(this.users);
+          }
+
+          this.http.get(this.config.get('usersApi'))
+              .subscribe(
+                  (response: Response) => {
+                      this.usersGetted = true;
+                      this.users = this.jsonToUser(response.json());
+                      resolve(this.users);
+                  },
+                  (err) => {
+                      reject(err);
+                  }
+              );
+      });
+  }
+
+  jsonToUser(userArray): User[] {
+      let users: Array<User> = [];
+      for (let user of userArray) {
+          let newUser = new User();
+          newUser.formObject(user);
+          users.push(newUser);
+      }
+
+      return users;
+  }
+
+  getAll(): Promise<any> {
+      return this.getUsersFromHttp();
   }
 
   getUserIndex(id) {

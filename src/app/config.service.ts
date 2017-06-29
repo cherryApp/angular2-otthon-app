@@ -3,7 +3,9 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class ConfigService {
   data: Object = {
-      appTitle: "Csupaszív Nyugdíjasház"
+      appTitle: "Csupaszív Nyugdíjasház",
+      api: 'api',
+      usersApi: 'api/users.json'
   };
 
   constructor() {}

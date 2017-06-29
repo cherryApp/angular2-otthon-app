@@ -7,8 +7,9 @@ export class User {
     relatives?: string;
     active?: boolean;
 
-    public constructor(id: number, lastName: string, firstName: string,
-                      email: string, phone: string, relatives: string = 'none',
+    public constructor(id: number = 1, lastName: string = "",
+                      firstName: string = "", email: string = "",
+                      phone: string = "", relatives: string = 'none',
                       active: boolean = false)
     {
         this.id = id;
@@ -18,5 +19,11 @@ export class User {
         this.phone = phone;
         this.relatives = relatives;
         this.active = active;
+    }
+
+    formObject(obj) {
+        for (let k in obj) {
+            this[k] = obj[k];
+        }
     }
 }
