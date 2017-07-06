@@ -19,9 +19,17 @@ function processUrl(url) {
 
 // Get kérések kezelése.
 function handleGetRequest(request, result) {
+    if (request.url.indexOf("favicon") > -1) {
+        return result.end("Hello");
+    }
+
+
     // Url feldolgozása.
     var url = processUrl(request.url);
     console.log(url);
+    if (url.length < 2) {
+        return result.end("Invalid url.");
+    }
     var model = url[0],
         id = url[1];
 

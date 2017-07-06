@@ -32,9 +32,10 @@ export class ContentComponent implements OnInit, OnDestroy {
 
     this.currentLink = this.urlService.currentUrl;
 
-    this.userService.getAll()
-        .then(
+    this.userService.userObserver
+        .subscribe(
             (users) => {
+                console.log("content", users);
                 this.usersCount = users.length;
             }
         )
