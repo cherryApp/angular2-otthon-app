@@ -23,7 +23,12 @@ export class NewUserComponent implements OnInit {
       let user = new User(1, values.lastName, values.firstName, values.email,
         values.phone, "", true);
 
-      this.userService.pushOne(user);
+      this.userService.pushOne(user)
+          .then(
+              (message: string) => {
+                  console.log(message);
+              }
+          );
   }
 
   checkError(form, control) {

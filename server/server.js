@@ -23,7 +23,6 @@ function handleGetRequest(request, result) {
         return result.end("Hello");
     }
 
-
     // Url feldolgozása.
     var url = processUrl(request.url);
     console.log(url);

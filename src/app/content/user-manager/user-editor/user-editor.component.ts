@@ -9,15 +9,25 @@ import { User } from '../../../model/User';
 })
 export class UserEditorComponent implements OnInit {
   @Input() user: User;
+  editedUser: User = new User();
   constructor(private userService: UserService) { }
 
   ngOnInit() {
+      this.userService.getOne(this.user.id)
+          .then( (user: User) => {
+              this.editedUser = user;
+          });
   }
 
   submitForm(form) {
-      console.log(this.user);
+      console.log(this.editedUser);
 
-      this.userService.editUser(this.user);
+      this.userService.editUser(this.editedUser)
+          .then(
+              (message: string) => {
+                  console.info(message);
+              }
+          );
   }
 
   checkError(form, control) {

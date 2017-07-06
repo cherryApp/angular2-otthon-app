@@ -5,7 +5,7 @@ export class ConfigService {
   data: Object = {
       appTitle: "Csupaszív Nyugdíjasház",
       api: 'api',
-      usersApi: 'api/users.json'
+      usersApi: 'http://localhost:3333'
   };
 
   constructor() {}

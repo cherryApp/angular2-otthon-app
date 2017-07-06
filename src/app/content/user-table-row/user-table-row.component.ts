@@ -45,6 +45,11 @@ export class UserTableRowComponent implements OnInit, OnDestroy {
   }
 
   deleteUser(user: User) {
-    this.userService.deleteUser(user);
+    this.userService.deleteUser(user)
+        .then(
+            (message: string) => {
+                console.info(message);
+            }
+        );
   }
 }

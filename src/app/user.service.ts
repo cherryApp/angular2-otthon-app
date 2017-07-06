@@ -6,6 +6,7 @@ import { User } from "./model/User";
 import { ConfigService } from "./config.service";
 import { Observer } from "rxjs/Observer";
 import { Subject } from "rxjs/Subject";
+import { HttpService } from './http.service';
 
 @Injectable()
 export class UserService {
@@ -13,9 +14,12 @@ export class UserService {
   lastEditedUser: User = null;
   usersGetted: boolean = false;
   userObserver: Subject<any> = new Subject();
+  userUrl: string = "";
 
-  constructor(private config: ConfigService, private http: Http) {
-      this.getUserWithObserver();
+  constructor(private config: ConfigService, private http: Http,
+              private httpService: HttpService) {
+    this.userUrl = this.config.get("usersApi") + "/user";
+    this.getUserWithObserver();
   }
 
   getUsersFromHttp() {
@@ -38,16 +42,16 @@ export class UserService {
   }
 
   getUserWithObserver() {
-    this.http.get(this.config.get("usersApi")).subscribe(
-            (response: Response) => {
-                // console.log(response.json());
-                this.users = this.jsonToUser(response.json());
-                this.userObserver.next(this.users);
-            },
-            err => {
-                this.userObserver.error("Error in getting users.");
-            }
-        );
+    this.http.get(this.userUrl + "/all").subscribe(
+      (response: Response) => {
+        // console.log(response.json());
+        this.users = this.jsonToUser(response.json());
+        this.userObserver.next(this.users);
+      },
+      err => {
+        this.userObserver.error("Error in getting users.");
+      }
+    );
   }
 
   jsonToUser(userArray): User[] {
@@ -81,12 +85,17 @@ export class UserService {
   }
 
   getOne(id: Number) {
-    let index = this.getUserIndex(id);
-    if (index === null) {
-      return index;
-    }
-
-    return this.users[index];
+    return new Promise((resolve, reject) => {
+      this.http.get(`${this.userUrl}/${id}`).subscribe(
+          (response: Response) => {
+              let user: User = new User();
+              user.formObject( response.json() );
+              resolve( user );
+          },
+          (err) => {
+              reject(err);
+          });
+    });
   }
 
   getTopID() {
@@ -105,10 +114,13 @@ export class UserService {
   }
 
   pushOne(user: User) {
-    user.id = this.getTopID() + 1;
-    this.users.push(user);
-
-    this.userObserver.next(this.users);
+      return new Promise((resolve, reject) => {
+          this.httpService.create(`${this.userUrl}`, user)
+              .then( (res) => {
+                  this.getUserWithObserver();
+                  resolve('user saved');
+              });
+      });
   }
 
   changeStatus(user: User) {
@@ -120,18 +132,28 @@ export class UserService {
   }
 
   editUser(user: User) {
-    let index = this.getUserIndex(user.id);
-    if (index !== null) {
-      for (let k in user) {
-        this.users[index][k] = user[k];
-      }
-    }
-    this.userObserver.next(this.users);
+      return new Promise((resolve, reject) => {
+          this.http.post(`${this.userUrl}/${user.id}`, JSON.stringify(user))
+              .subscribe(
+                  (response: Response) => {
+                      this.getUserWithObserver();
+                      resolve('success');
+                  },
+                  (err) => {
+                      reject(err);
+                  });
+            });
   }
 
   deleteUser(user: User) {
-    let index = this.getUserIndex(user.id);
-    this.users.splice(index, 1);
-    this.userObserver.next(this.users);
+      return new Promise( (resolve, reject) => {
+          this.http.delete(`${this.userUrl}/${user.id}`)
+              .forEach(
+                  (response: Response) => {
+                      this.getUserWithObserver();
+                      resolve('user deleted');
+                  }
+              );
+      });
   }
 }

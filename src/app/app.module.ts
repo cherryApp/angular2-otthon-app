@@ -14,6 +14,7 @@ import { NewUserComponent } from './content/user-manager/new-user/new-user.compo
 import { UserTableRowComponent } from './content/user-table-row/user-table-row.component';
 import { ConfigService } from './config.service';
 import { HttpModule } from "@angular/http";
+import { HttpService } from './http.service';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { HttpModule } from "@angular/http";
   providers: [
     UserService,
     UrlService,
-    ConfigService
+    ConfigService,
+    HttpService
   ],
   bootstrap: [AppComponent]
 })
