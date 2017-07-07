@@ -3,6 +3,6 @@
 <div class="container-fluid">
     <div class="row">
         <app-left-sidebar (change)="onPageChange($event)"></app-left-sidebar>
-        <app-content [pageChange]="pageChange"></app-content>
+        <router-outlet></router-outlet>
     </div>
 </div>

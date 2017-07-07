@@ -74,7 +74,10 @@ function handlePutRequest(request, result) {
 
         // Beszújruk az új sort a fájl végére.
         modelJson = JSON.parse(modelJson);
-        var lastId = modelJson[modelJson.length - 1].id;
+        var lastId = 0;
+        if (modelJson.length > 0) {
+            lastId = modelJson[modelJson.length - 1].id;
+        }
         body.id = parseInt(lastId, 10) + 1;
         modelJson.push(body);
 

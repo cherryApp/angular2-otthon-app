@@ -15,6 +15,19 @@ import { UserTableRowComponent } from './content/user-table-row/user-table-row.c
 import { ConfigService } from './config.service';
 import { HttpModule } from "@angular/http";
 import { HttpService } from './http.service';
+import { RouterModule, Routes } from '@angular/router';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { RoomsComponent } from './rooms/rooms.component';
+import { SupplyComponent } from './supply/supply.component';
+import { RoomService } from './room.service';
+
+const routerSettings: Routes = [
+  { path: '', component: ContentComponent },
+  { path: 'user-manager', component: UserManagerComponent },
+  { path: 'rooms', component: RoomsComponent },
+  { path: 'supply', component: SupplyComponent },
+  { path: '**', component: PageNotFoundComponent }
+];
 
 @NgModule({
   declarations: [
@@ -25,18 +38,23 @@ import { HttpService } from './http.service';
     UserManagerComponent,
     UserEditorComponent,
     NewUserComponent,
-    UserTableRowComponent
+    UserTableRowComponent,
+    PageNotFoundComponent,
+    RoomsComponent,
+    SupplyComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    RouterModule.forRoot(routerSettings)
   ],
   providers: [
     UserService,
     UrlService,
     ConfigService,
-    HttpService
+    HttpService,
+    RoomService
   ],
   bootstrap: [AppComponent]
 })

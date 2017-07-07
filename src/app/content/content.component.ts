@@ -15,7 +15,7 @@ export class ContentComponent implements OnInit, OnDestroy {
   @Output() roomsCount: Number = 12;
   @Output() staffCount: Number = 30;
   @Output() currentStaffCount: Number = 7;
-  private currentLink: string = "/";
+  public currentLink: string = "/";
 
   users = [];
 

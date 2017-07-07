@@ -5,35 +5,52 @@ import { ConfigService } from './config.service';
 @Injectable()
 export class HttpService {
 
-  constructor(private http: Http, private config: ConfigService) { }
+  constructor(protected http: Http, protected config: ConfigService) { }
 
-  create(url: string, data: any) {
+  baseRequest(url, type, data?) {
       return new Promise( (resolve, reject) => {
-          try {
-              data = JSON.stringify(data);
-          } catch (err) {
-              reject("Invalid object!");
+          if (data) {
+            try {
+                data = JSON.stringify(data);
+            } catch (err) {
+                reject("Invalid object!");
+            }
+          } else {
+            data = {};
           }
 
-          this.http.put(url, data)
-              .forEach(
-                  (response: Response) => {
-                      resolve(response);
-                  }
-              )
+          if (['put', 'post'].indexOf(type) > -1) {
+            this.http[type](url, data)
+                .forEach(
+                    (response: Response) => {
+                        resolve(response);
+                    }
+                );
+          } else {
+            this.http[type](url)
+                .forEach(
+                    (response: Response) => {
+                        resolve(response);
+                    }
+                );
+          }
       });
   }
 
-  read() {
-
+  create(url: string, data: any) {
+      return this.baseRequest(url, 'put', data);
   }
 
-  update() {
-
+  read(url) {
+      return this.baseRequest(url, 'get');
   }
 
-  delete() {
+  update(url, data) {
+      return this.baseRequest(url, 'post', data);
+  }
 
+  delete(url) {
+      return this.baseRequest(url, 'delete');
   }
 
 

@@ -19,7 +19,7 @@ export class UserEditorComponent implements OnInit {
           });
   }
 
-  submitForm(form) {
+  submitForm() {
       console.log(this.editedUser);
 
       this.userService.editUser(this.editedUser)
