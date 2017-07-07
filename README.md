@@ -4,6 +4,12 @@ Nyugdíjas otthon kezelő példa alkalmazás
 ## Hasznos linkek
 * [Observables használata](https://angular-2-training-book.rangle.io/handout/observables/using_observables.html)
 
+## NodeJS szerver használata
+* `cd server`
+* `node server`
+* ha új modellt akarsz kiszolgálni, vegyék fel egy azonos nevű .json fájlt 
+a server.js mappájába, ezzel a tartalommal: `[]`
+
 ## Alkalmazás publikálása
 * `ng build --prod`
 * másoljuk az dist mappa tartalmát a kívánt végleges helyre
