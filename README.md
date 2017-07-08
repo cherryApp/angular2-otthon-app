@@ -4,6 +4,10 @@ Nyugdíjas otthon kezelő példa alkalmazás
 ## Hasznos linkek
 * [Observables használata](https://angular-2-training-book.rangle.io/handout/observables/using_observables.html)
 
+## NodeJS szerver két hónapig ingyen
+> Ha ezen a linken regisztrálsz a DigitalOcean rendszerében, akkor kapsz $10 kreditet. A legolcsóbb NodeJS szerver $5 havonta, így két hónapig használhatod.  
+https://m.do.co/c/68bcce6d6f8f
+
 ## NodeJS szerver használata
 * `cd server`
 * `node server`
